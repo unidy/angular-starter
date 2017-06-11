@@ -1,0 +1,23 @@
+<div class="panel panel-default login">
+  <div class="panel-heading">
+    <h3 class="panel-title"><i class="fa fa-list"></i>Login </h3>
+  </div>
+  <div class="panel-body">
+    <form>
+      <div class="form-group">
+        <label for="user.name">User Name:</label>
+        <input class="form-control" required [(ngModel)]="user.name" placeholder="Enter user name" id="user.name"
+               name="user.name" type="text">
+      </div>
+      <div class="form-group">
+        <label for="user.password">Password:</label>
+        <input class="form-control" required type="password" [(ngModel)]="user.password" placeholder="Enter password"
+               id="user.password" name="user.password">
+      </div>
+      <div class="form-group">
+        <button class="btn btn-primary" (click)="login()" type="submit">LOGIN</button>
+      </div>
+    </form>
+  </div>
+</div>
+

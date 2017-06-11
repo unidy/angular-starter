@@ -1,0 +1,20 @@
+<div class="panel-body">
+  <div *ngIf="user">
+    <div *ngIf="!user.id">
+      <label>id:</label>
+      <input class="form-control" [(ngModel)]="user.id" placeholder="id"/>
+    </div>
+    <div>
+      <label>name:</label>
+      <input class="form-control" [(ngModel)]="user.name" placeholder="name"/>
+    </div>
+    <div>
+      <label>email:</label>
+      <input class="form-control" ngModel="user.email" placeholder="email" type="email"/>
+    </div>
+    <div *ngIf="!user.password">
+      <label>password:</label>
+      <input class="form-control" ngModel="user.password" , placeholder="password"/>
+    </div>
+  </div>
+</div>
