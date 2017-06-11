@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { User } from "../../core/user/user.model";
 import { UserService } from "../../core/user/user.service";
 import { ActivatedRoute, Router } from "@angular/router";
+import { Observable } from "rxjs/Observable";
+import { Subject } from "rxjs/Subject";
 
 @Component({
   selector: 'app-users',
@@ -9,7 +11,7 @@ import { ActivatedRoute, Router } from "@angular/router";
   styleUrls: ['./users.component.scss']
 })
 export class UsersComponent implements OnInit {
-  users: Array<User>;
+  users: User[];
   user: User;
   selectedUser: User;
   
@@ -21,6 +23,5 @@ export class UsersComponent implements OnInit {
 
   onSelect(user: User): void {
     this.selectedUser = user;
-    // this.router.navigate([user.id], { relativeTo: this.route });
   }
 }

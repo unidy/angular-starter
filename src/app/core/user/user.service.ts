@@ -1,13 +1,15 @@
 import { Injectable } from '@angular/core';
 import { User } from "./user.model";
-import { resolve } from "q";
+import { Http } from "@angular/http";
+import 'rxjs/add/operator/toPromise';
 
 @Injectable()
 export class UserService {
   private user: User;
   private users: Array<User>;
+  private readonly serverUrl = 'http://localhost:8080/mysql';
   
-  constructor() {
+  constructor(private http: Http) {
     this.users = new Array<User>();
     this.user = new User(1, "demo", "demo", "demo@unidy.com");
     this.users.push(this.user);
@@ -18,8 +20,14 @@ export class UserService {
     return user;
   }
   
-  public getAll(): Promise<Array<User>> {
-    return Promise.resolve(this.users);
+  public getAll(): Promise<User[]> {
+    return this.http
+      .get(this.serverUrl + "/all")
+      .toPromise()
+      .then(function (res) {
+        return res.json() as User[];
+      })
+    .catch(this.handleError);
   }
   
   public getUser(): Promise<User> {
@@ -32,5 +40,10 @@ export class UserService {
   
   public create(id: number, name: string, password: string, email: string): User {
     return new User(id, name, password, email);
+  }
+  
+  private handleError(error: any): Promise<any> {
+    console.log(error);
+    return Promise.reject(error.message || error);
   }
 }
