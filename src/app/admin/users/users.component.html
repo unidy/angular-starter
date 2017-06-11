@@ -1,7 +1,11 @@
 <div>
+  <div>
+    <button class="btn-default" type="button" (click)="add()">Add</button>
+  </div>
   <ul class="users">
     <li *ngFor="let user of users" (click)="onSelect(user)" [class.selected]="user === selectedUser">
-      <span class="badge">{{user.name}}</span>
+      <span class="badge">{{user.id}}</span>
+      <span>{{user.name}} </span>
       <span>{{user.email}}</span>
     </li>
   </ul>

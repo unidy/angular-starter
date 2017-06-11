@@ -1,20 +1,29 @@
 <div class="panel-body">
   <div *ngIf="user">
-    <div *ngIf="!user.id">
-      <label>id:</label>
-      <input class="form-control" [(ngModel)]="user.id" placeholder="id"/>
-    </div>
-    <div>
-      <label>name:</label>
-      <input class="form-control" [(ngModel)]="user.name" placeholder="name"/>
-    </div>
-    <div>
-      <label>email:</label>
-      <input class="form-control" ngModel="user.email" placeholder="email" type="email"/>
-    </div>
-    <div *ngIf="!user.password">
-      <label>password:</label>
-      <input class="form-control" ngModel="user.password" , placeholder="password"/>
-    </div>
+    <form>
+      <div class="form-group">
+        <label for="user.id">User Id:</label>
+        <input class="form-control" [(ngModel)]="user.id" placeholder="id" id="user.id"
+               name="user.id" type="text" >
+      </div>
+      <div class="form-group">
+        <label for="user.name">User Name:</label>
+        <input class="form-control" [(ngModel)]="user.name" placeholder="name" id="user.name"
+               name="user.name" type="text">
+      </div>
+      <div class="form-group">
+        <label for="user.email">User Email:</label>
+        <input class="form-control" [(ngModel)]="user.email" placeholder="email" type="email" id="user.email"
+               name="user.email" type="text">
+      </div>
+      <div class="form-group">
+        <label for="user.password">User Password:</label>
+        <input class="form-control" [(ngModel)]="user.password" placeholder="password" id="user.password"
+               name="user.password" type="text">
+      </div>
+      <div class="form-group">
+        <button class="btn btn-primary" (click)="saveOrUpdate()" type="submit">{{ user.id ? 'Save' : 'Add'}}</button>
+      </div>
+    </form>
   </div>
 </div>

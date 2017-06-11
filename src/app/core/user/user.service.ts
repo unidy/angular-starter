@@ -15,9 +15,16 @@ export class UserService {
     this.users.push(this.user);
     this.users.push(new User(2, "john", "john", "john@unidy.com"));
   }
-
-  public addUser(user: User): User {
-    return user;
+  
+  public addUser(user: User): Promise<User> {
+    let params = 'name=' + user.name + '&email=' + user.email + '&password=' + user.password;
+    return this.http
+      .get(this.serverUrl + '/add?' + params)
+      .toPromise()
+      .then(function (res) {
+        return res.json() as User;
+      })
+      .catch(this.handleError);
   }
   
   public getAll(): Promise<User[]> {
@@ -27,7 +34,7 @@ export class UserService {
       .then(function (res) {
         return res.json() as User[];
       })
-    .catch(this.handleError);
+      .catch(this.handleError);
   }
   
   public getUser(): Promise<User> {
