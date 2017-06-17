@@ -7,13 +7,13 @@ import {
 import { Observable } from "rxjs/Observable";
 
 @Injectable()
-export class AuthGuardService implements CanActivate, CanActivateChild, CanLoad{
+export class AuthGuard implements CanActivate, CanActivateChild, CanLoad{
   
   
   constructor(private router: Router, private authService: AuthService) { }
   
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | Observable<boolean> | Promise<boolean> {
-    return this.checkToken(state.url);
+    return this.auth(state.url);
   }
   
   canActivateChild(childRoute: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | Observable<boolean> | Promise<boolean> {
@@ -22,10 +22,10 @@ export class AuthGuardService implements CanActivate, CanActivateChild, CanLoad{
   }
   
   canLoad(route: Route): boolean | Observable<boolean> | Promise<boolean> {
-    return this.checkToken(`/${route.path}`);
+    return this.auth(`/${route.path}`);
   }
   
-  private checkToken(url: string): boolean {
+  private auth(url: string): boolean {
     if (this.authService.isLoggedIn) {
       return true;
     }

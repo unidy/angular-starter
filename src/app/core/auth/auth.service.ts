@@ -31,8 +31,7 @@ export class AuthService implements CanActivate {
         this.loginEvent$.emit(user);
         this.isLoggedIn = true;
         return user;
-      })
-      .catch();
+      });
   }
   
   public logout(): void {

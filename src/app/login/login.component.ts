@@ -13,7 +13,6 @@ import { UserService } from "../core/user/user.service";
     'login.component.scss'
   ]
 })
-
 export class LoginComponent implements OnInit {
   private user: User;
   
@@ -29,9 +28,7 @@ export class LoginComponent implements OnInit {
   }
   
   login(): void {
-    if (this.authService.login(this.user.name, this.user.password)) {
-      this.router.navigate([ '/home' ]);
-    }
-    ;
+    this.authService.login(this.user.name, this.user.password)
+      .then(() => this.router.navigate([ this.authService.redirectUrl || "/home" ]));
   }
 }
