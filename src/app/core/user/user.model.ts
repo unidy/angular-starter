@@ -4,10 +4,10 @@ export class User {
   password: string;
   email: string;
   
-  constructor(id, name: string, password: string, email: string) {
-    this.id = id;
-    this.name = name;
-    this.password = password;
-    this.email = email;
-  }
+  // constructor(id, name: string, password: string, email: string) {
+  //   this.id = id;
+  //   this.name = name;
+  //   this.password = password;
+  //   this.email = email;
+  // }
 }

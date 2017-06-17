@@ -26,6 +26,8 @@ export class UsersComponent implements OnInit {
   }
   
   add(): void {
-    this.selectedUser = this.userService.create(null, null, null, null);
+    this.user = new User();
+    this.users.push(this.user);
+    this.selectedUser = this.user;
   }
 }

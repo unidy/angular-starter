@@ -17,16 +17,21 @@ import { UserService } from "../core/user/user.service";
 export class LoginComponent implements OnInit {
   private user: User;
   
-  constructor(private router: Router, private authService: AuthService, private userService: UserService) {
+  constructor(private router: Router, private authService: AuthService) {
   }
   
   ngOnInit(): void {
-    this.user = this.userService.create(1,"John", "password", "john@unidy.com");
+    this.user = new User();
+    this.user.id = 1;
+    this.user.name = 'John';
+    this.user.password = 'password';
+    this.user.email = 'john@unidy.com';
   }
   
   login(): void {
-    if (this.authService.login(this.user)) {
-      this.router.navigate(['/home']);
-    };
+    if (this.authService.login(this.user.name, this.user.password)) {
+      this.router.navigate([ '/home' ]);
+    }
+    ;
   }
 }

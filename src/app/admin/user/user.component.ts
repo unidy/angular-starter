@@ -17,6 +17,7 @@ export class UserComponent implements OnInit {
   }
   
   saveOrUpdate(): void {
-    this.userService.addUser(this.user).then(user => this.user = user);
+    this.userService.create(this.user)
+      .then(user => this.user = user);
   }
 }

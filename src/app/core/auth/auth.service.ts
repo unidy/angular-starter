@@ -1,5 +1,5 @@
 import { Injectable, EventEmitter } from "@angular/core";
-import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot} from "@angular/router";
+import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from "@angular/router";
 import { Observable } from "rxjs";
 import { User } from "../user/user.model";
 import { UserService } from "../user/user.service";
@@ -13,21 +13,26 @@ export class AuthService implements CanActivate {
   public loginEvent$: EventEmitter<User>;
   public logoutEvent$: EventEmitter<User>;
   
-constructor(private userService: UserService) {
+  constructor(private userService: UserService) {
     this.loginEvent$ = new EventEmitter<User>();
     this.logoutEvent$ = new EventEmitter<User>();
   }
   
   canActivate(route: ActivatedRouteSnapshot,
-              state: RouterStateSnapshot): Observable<boolean>|Promise<boolean>|boolean {
+              state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
     return this.isLoggedIn;
   }
   
-  public login(user: User): boolean {
-    this.isLoggedIn = true;
-    this.userService.setUser(user);
-    this.loginEvent$.emit(user);
-    return this.isLoggedIn;
+  public login(name: string, password: string): Promise<User> {
+    // this.isLoggedIn = true;
+    return this.userService.login(name, password)
+      .then(user => this.token = user)
+      .then((user) => {
+        this.loginEvent$.emit(user);
+        this.isLoggedIn = true;
+        return user;
+      })
+      .catch();
   }
   
   public logout(): void {
@@ -36,8 +41,9 @@ constructor(private userService: UserService) {
     this.logoutEvent$.emit(null);
   }
   
-  public getToken(): User {
-    this.userService.getUser().then(user => this.token = user);
+  public getToken(): any {
     return this.token;
   }
+  
+  
 }

@@ -1,29 +1,25 @@
 import { Injectable } from '@angular/core';
 import { User } from "./user.model";
-import { Http } from "@angular/http";
+import { Http, RequestOptions, Headers } from "@angular/http";
 import 'rxjs/add/operator/toPromise';
 
 @Injectable()
 export class UserService {
   private user: User;
-  private users: Array<User>;
+  private users: User[];
   private readonly serverUrl = 'http://localhost:8080/mysql';
   
   constructor(private http: Http) {
-    this.users = new Array<User>();
-    this.user = new User(1, "demo", "demo", "demo@unidy.com");
-    this.users.push(this.user);
-    this.users.push(new User(2, "john", "john", "john@unidy.com"));
+    this.users = [];
   }
   
-  public addUser(user: User): Promise<User> {
-    let params = 'name=' + user.name + '&email=' + user.email + '&password=' + user.password;
-    return this.http
-      .get(this.serverUrl + '/add?' + params)
+  public create(user: User): Promise<User> {
+    let headers = new Headers({'Content-Type': 'application/json'});
+    let options = new RequestOptions({headers: headers});
+    
+    return this.http.post(this.serverUrl + '/create', user, options)
       .toPromise()
-      .then(function (res) {
-        return res.json() as User;
-      })
+      .then((res) => res.json() as User)
       .catch(this.handleError);
   }
   
@@ -37,16 +33,21 @@ export class UserService {
       .catch(this.handleError);
   }
   
-  public getUser(): Promise<User> {
-    return Promise.resolve(this.user);
+  public login(name: string, password: string): Promise<User> {
+    let params = "?name=" + name + "&password=" + password;
+    
+    return this.http.get(this.serverUrl + "/login" + params)
+      .toPromise()
+      .then((response) => response ? response.json() as User : null)
+      .catch(this.handleError);
+  }
+  
+  public getUser() {
+    return this.user;
   }
   
   public setUser(user: User) {
     this.user = user;
-  }
-  
-  public create(id: number, name: string, password: string, email: string): User {
-    return new User(id, name, password, email);
   }
   
   private handleError(error: any): Promise<any> {
